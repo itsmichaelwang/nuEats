@@ -1,0 +1,80 @@
+// Clock
+#clock {
+	font-size: 1em;
+}
+
+/* Control the label FONT above the timeline bars */
+.timeline-bars-label {
+	margin-top: 5px;
+	margin-bottom: 20px;
+
+	font-size: 1em;
+	font-weight: bold;
+}
+
+/* Control the HEIGHT and COLOR of the equivalency rate timeline bars */
+.timeline-bars {
+	height: 1em;
+}
+
+/* This controls each individual bar as a group, whereas the above controls
+ * the wrapper around the whole timeline
+ */
+.bars {
+	height: 100%;
+	float: left;
+}
+
+/* LIGHT GREEN */
+#block0 {
+	background-color: #40d351;
+}
+
+/* MEDIUM GREEN */
+#block1 {
+	background-color: #2e973a;
+}
+
+/* DARK GREEN */
+#block2 {
+	background-color: #216C2A;
+}
+
+/* MEDIUM GREEN */
+#block3 {
+	background-color: #2e973a;
+}
+
+/* Control the FONT surrounding the timeline bars */
+.time {
+	margin-left: 5px;
+	margin-top: -1.4em;
+
+	font-size: 0.7em;
+	font-weight: bold;
+}
+
+.time-right {
+	margin-top: -2.8em;
+	float: right;
+
+	font-size: 0.7em;
+	font-weight: bold;
+}
+
+.price {
+	margin-left: 5px;
+	color: white;
+
+	font-size: 0.7em;
+
+}
+
+.menu {
+	font-weight: bold;
+	float: right;
+}
+
+.menu:hover {
+	text-decoration: underline;
+}
