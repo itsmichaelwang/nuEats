@@ -1,10 +1,9 @@
-// Clock
 #clock {
 	font-size: 1em;
 }
 
 /* Control the label FONT above the timeline bars */
-.timeline-bars-label {
+#rate-bars-label {
 	margin-top: 5px;
 	margin-bottom: 20px;
 
@@ -12,19 +11,13 @@
 	font-weight: bold;
 }
 
-/* Control the HEIGHT and COLOR of the equivalency rate timeline bars */
-.timeline-bars {
+/* Format each equivalency-rate bar as a group */
+.rate-bars {
 	height: 1em;
-}
-
-/* This controls each individual bar as a group, whereas the above controls
- * the wrapper around the whole timeline
- */
-.bars {
-	height: 100%;
 	float: left;
 }
 
+/* Set each bar's color individually; add more CSS if you add more time blocks */
 /* LIGHT GREEN */
 #block0 {
 	background-color: #40d351;
@@ -46,30 +39,30 @@
 }
 
 /* Control the FONT surrounding the timeline bars */
-.time {
-	margin-left: 5px;
-	margin-top: -1.4em;
+.timeText {
+	margin-top: -1.5em;
+	margin-left: 5px;	/* Some space makes it look better */
 
-	font-size: 0.7em;
+	font-size: 0.75em;
 	font-weight: bold;
 }
 
-.time-right {
-	margin-top: -2.8em;
+.timeText-right {
+	margin-top: -3.0em;
+
+	font-size: 0.75em;
+	font-weight: bold;
 	float: right;
-
-	font-size: 0.7em;
-	font-weight: bold;
 }
 
-.price {
+.priceText {
 	margin-left: 5px;
+
 	color: white;
-
-	font-size: 0.7em;
-
+	font-size: 0.75em;
 }
 
+/* Formatting concerning the "Menu" button */ 
 .menu {
 	font-weight: bold;
 	float: right;

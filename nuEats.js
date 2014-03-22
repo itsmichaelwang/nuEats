@@ -1,29 +1,32 @@
-/*
- * This portion of code is for the live updating clock
- */
 function onCreate() {
-    
-    // Create a clock and keep it updated
-    document.getElementById("clock").innerHTML = createClock();
-    t = setInterval(function() {
-        document.getElementById("clock").innerHTML = createClock();
-    }, 500);
 
-    // Dynamically create equivalency rate bars
-    createEqMealBars();
+    // Consider this to be the "main" function of sorts
+    document.getElementById("clock").innerHTML = createClock();                                     // Create a clock
+    setInterval(function() { document.getElementById("clock").innerHTML = createClock(); }, 500);   // Update it every half-second
 
-    // Move the arrow when the window is resized
-    setArrowPosition();
-    $(window).resize(function() {
-        setArrowPosition();
-    });
+    // Dynamically create equivalency-rate bars from array data
+    //              Time     Equivalency Rate
+    var EqRates = [ [7,  30, "5.00"],
+                    [10, 45, "7.00"],
+                    [16, 45, "9.00"],
+                    [19, 30, "7.00"],
+                    [26, 00, "N/A" ] ]; // 2:00 AM, the NEXT day!
+    createEqRateBars(EqRates);
+
+    // Set the position of an arrow pointing to the correct time block
+    setArrowPosition(EqRates);
+    setInterval(function() { setArrowPosition(EqRates); }, 1000);   // Update it every second
+    $(window).resize(function() { setArrowPosition(EqRates); });    // Update it upon window resize
+
+
 }
 
+
 /*
- * Create a clock that constantly updates itself
+ * Create a clock, with special formatting
  */
 function createClock() {
-    // Date format is "Sunday, January 1st, 12:00 AM", inputs processed in order
+    // Date format is "Sunday, January 1st, 12:00:00 AM"
     var today = new Date();
 
     var day = returnDay(today.getDay());    // Convert day integer to string (i.e. Monday, Tuesday, Wednesday...)
@@ -31,48 +34,30 @@ function createClock() {
     var d = formatDate(today.getDate());    // Add suffix to date (i.e. 1st, 2nd, 4th...)
 
     var h = today.getHours();
-    var m = formatTime(today.getMinutes()); // If minutes/seconds is single digit, add zero before
+    var m = formatTime(today.getMinutes()); // If minutes or seconds is single digit, add zero before
     var s = formatTime(today.getSeconds());
-    var AMPM;
 
-    // Format the time for a 12 hour schedule
-    if (h > 12) {
-        h = h % 12;
-        AMPM = "PM";
-    } else {
-        AMPM = "AM";
-    }
+    var AMPM = getAMPM(h);
+    h = h % 12;
 
-    if (h == 0) {
-        h = "12";
-    }
-
-    // Controls the final clock formatting
+    // Controls the final output of the clock's text
     return (day).bold() + ", " + o + " " + d + ", " + h + ":" + m + ":" + s + " " + AMPM;
-
-    }
-
-function returnDay(day) {
-    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    return days[day];
 }
 
-function returnMonth(month) {
-    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-    return months[month];
-}
-
+// A series of helper functions
+function returnDay(day) { return ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day]; }
+function returnMonth(month) { return ["January","February","March","April","May","June","July","August","September","October","November","December"][month]; }
 function formatDate(date) {
-    if (date % 10 == 1) {
+    digit = date % 10;
+    if (digit == 1) {
         return date + "st";
-    } else if (date % 10 == 2) {
+    } else if (digit == 2) {
         return date + "nd";
-    } else if (date % 10 == 3) {
+    } else if (digit == 3) {
         return date + "rd";
     } else {
         return date + "th";
     }
-    return null;
 }
 
 // Add zeros before numbers where necessary
@@ -83,105 +68,106 @@ function formatTime(i) {
     return i;
 }
 
+// Given an hour, determine if it is AM or PM
+function getAMPM(hour) {
+    return ["AM","PM"][(((hour % 24) >= 12) & 1)];
+}
+
+
 /*
- * Dynamically create equivalency meal bars
+ * Procedurally create equivalency rate exchange bars
  */
-function createEqMealBars() {
+function createEqRateBars(EqRates) {
     
-    /*
-     * USER SPECIFIED VARIABLES  
-     *///           Time     Equivalency Rate
-    var EqRate = [  [7,  30, "5.00"],
-                    [10, 45, "7.00"],
-                    [16, 45, "9.00"],
-                    [19, 30, "7.00"],
-                    [26, 00, "N/A" ]  ]; // 2:00 AM, the next day
-                                         // Put closing time in last row!
-    var rows = 5;
-    var columns = 3;
-    
-    /*
-     * EVERYTHING ELSE IS PROCEDURALLY GENERATED
-     */
-    // Calculate total minutes for all blocks
-    var startMin = timeInMin(EqRate[0][0], EqRate[0][1]);
-    var endMin = timeInMin(EqRate[rows - 1][0], EqRate[rows - 1][1]);
+    // EqRates is a "3-dimensional" array of time slots and corresponding equivalency rates
+    var rows = EqRates.length;
+    var columns = EqRates[0].length;
+
+    // Use the total length of all blocks to figure out what proportion each individual block takes up
+    var startMin = timeInMin(EqRates[0][0], EqRates[0][1]); // Converts hours and minutes to just minutes for easy math
+    var endMin = timeInMin(EqRates[rows - 1][0], EqRates[rows - 1][1]);   
     var totalMin = endMin - startMin;
 
-    // Create div for each time block, aka "row"
+    // For each time block, create a div that represents that block graphically as a horizontal bar
     for (var i = 0; i < rows - 1; i++) {
         
+        // Set up variables that specify the horizontal bar's name and width, then add it
         var name = "block" + i;
-        var AMPM = AMorPM(EqRate[i][0]);
-        var barWidth = timeInMin(EqRate[i + 1][0], EqRate[i + 1][1]) -
-                       timeInMin(EqRate[i][0], EqRate[i][1]);
-        barWidth = (barWidth / totalMin) * 100 + "%";
+        var blockMin = timeInMin(EqRates[i + 1][0], EqRates[i + 1][1]) - timeInMin(EqRates[i][0], EqRates[i][1]);
+        var blockWidth = (blockMin / totalMin) * 100 + "%";
 
         jQuery('<div/>', {
             id: name,
-            class: "bars",
+            class: "rate-bars",
             css: {
-                width: barWidth,
+                width: blockWidth,
             }
-        }).appendTo('#timeline-bars');
+        }).appendTo('#rate-bars-container');
+
+
+        // Format time information, then display it ABOVE the bar
+        var hour = EqRates[i][0] % 12;              // 12-hour time
+        var minute = formatTime(EqRates[i][1]);     // Add '0' before minute if minute < 10
+        var AMPM = getAMPM(EqRates[i][0]);          // Is it AM or PM?
 
         jQuery('<div/>', {
-            class: 'time',
-            text: (EqRate[i][0] % 12) + ":" + (formatTime(EqRate[i][1])) + " " + AMPM
+            class: 'timeText',
+            text: hour + ":" + minute + " " + AMPM
         }).appendTo("#" + name);
 
+
+        // Pull price information, then display it ON the bar
+        var price = EqRates[i][2];
+
         jQuery('<div/>', {
-            class: 'price',
-            text: '$' + EqRate[i][2]
+            class: 'priceText',
+            text: '$' + price
         }).appendTo("#" + name);
     }
 
-    var AMPM = AMorPM(EqRate[rows - 1][0]);
+    // Do something special to pull closing time and put it ABOVE the bar and flush right
+    var hour = EqRates[rows-1][0] % 12;             // 12-hour time
+    var minute = formatTime(EqRates[rows-1][1]);    // Add '0' before minute if minute < 10
+    var AMPM = getAMPM(EqRates[rows - 1][0]);       // Is it AM or PM?
+
     jQuery('<div/>', {
-        class: 'time-right',
-        text: (EqRate[rows - 1][0] % 12) + ":" + (formatTime(EqRate[i][1])) + " " + AMPM
-    }).appendTo("#" + name);
+        class: 'timeText-right',
+        text: hour + ":" + minute + " " + AMPM
+    }).appendTo("#" + name); // Just to keep thing simple, we'll make it a subclass of the last horizontal bar
 }
 
-function AMorPM(hour) {
-    if (hour >= 12 && hour < 24) {
-        return "PM";
-    }
-    return "AM";
-}
 
 /*
- * Dynamic arrow adjustment and setting of equivalency meal value
+ * Set arrow location depending on equivalency meal value
  */
-function setArrowPosition() {
+function setArrowPosition(EqRates) {
+
+    // EqRates is a "3-dimensional" array of time slots and corresponding equivalency rates
+    var rows = EqRates.length;
+
+    // Get some time information
     var today = new Date();
 
-    var currentMin = dateInMin(today);  // Current time in minutes
-    var openMin = timeInMin(7, 30);     // 7:30 AM
-    var closeMin = timeInMin(2, 00);    // 2:00 AM
+    var currentMin = dateInMin(today);                                      // Current time in minutes from midnight
+    var openMin = timeInMin(EqRates[0][0], EqRates[0][1]);                  // 7:30 AM - same format
+    var closeMin = timeInMin(EqRates[rows - 1][0], EqRates[rows - 1][1]);   // 2:00 AM the NEXT DAY - same format
+    var DAY_IN_MINUTES = 24*60;                                             // Will be useful later on for subtracting
 
-    // If after 7:30 AM/before 2:00 AM the same day, show arrow
-    if (currentMin >= openMin || currentMin < closeMin) {
+    // If it is after 7:30 AM OR before 2:00 AM on the SAME DAY, show the arrow, otherwise hide it
+    if (currentMin >= openMin || currentMin < closeMin - DAY_IN_MINUTES) {
 
-        // If next day's time, add minutes from the previous day (correction)
-        if (currentMin >= 0 && currentMin < closeMin) {
-            currentMin = currentMin + 1440;
-        }
-
-        /* Represent the currentMin as a percent along the timeline as such:
-         * 1) Subtract currentMin by openMin so the percent is at zero at 7:30 AM
-         * 2) Divide by 1110, the maximum number of minutes from 7:30 AM to 2:00 AM the next day, normalization
-         * 3) Now multiply by the width of the timeline (using a proportion ensures it works on all screens)
-         * 4) Subtract by 5px at the end, to correct for the 11px sized arrow (centering it by its center, not left side)
+        /* Place the "current time" arrow as such:
+         * 1) Subtract currentMin by openMin so the arrow is at 0(%) displacement at 7:30 AM
+         * 2) Divide by (closeMin - openMin), the minutes from open to close time, so that at close time, the arrow is at 100(%) displacement
+         * 3) There is 5px of offset from the width of the arrow, convert that to a (%) and subtract it
+         * 4) Multiply by 100 so we have an actual percent
          * 5) Set this absolute number to the left-margin shift
          */
-        var timelinePercent =
-            [(currentMin - openMin)/1110] * $("#timeline-bars").width() - 5;
-        $("#arrow").css("margin-left", timelinePercent + "px");
-
+        var timelinePercent = [(currentMin - openMin)/(closeMin - openMin) - (5/$("#rate-bars-container").width())] * 100;
+        $("#arrow").css("margin-left", timelinePercent + "%");
     } else {
-        $("#arrow").hide();   
-    }   
+        $("#arrow").hide();
+    }
 }
 
 // Easy ways to return times as minutes

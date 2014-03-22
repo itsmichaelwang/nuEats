@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -22,28 +18,29 @@
     </head>
 
     <body onload="onCreate()">
+
         <!-- Navigation Bar -->
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-inner">
                 <div class="container">
                     <a class="navbar-brand" href="#">nuEats</a>
-                </div><!-- /.container -->
+                </div>
             </div>
         </div>
 
-        <!-- Clock and Equivalency Meal Timeline -->
+        <!-- Clock -->
         <div class="container">
-
             <div id="clock"></div>
-
-            <div class="equivalency-meal">
-                <div class="timeline-bars-label">Equivalency Meal Value: </div>
-                <div class="timeline-bars" id="timeline-bars"></div>
-                <div id="arrow"><img src="arrow.png"></div>
-            </div>
         </div>
 
-        <!-- Collapsible Panels -->
+        <!-- Equivalency Meal Exchange Rate Timeline -->
+        <div class="container">
+            <div id="rate-bars-label">Equivalency Meal Exchange Rate:</div>
+            <div class="rate-bars-container" id="rate-bars-container"></div>
+            <div id="arrow"><img src="arrow.png"></div>
+        </div>
+        
+        <!-- Info Panels for Each Dining Hall -->
         <div class="container">
             <div class="panel-group" id="accordion">
 
@@ -52,8 +49,15 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             1835 Hinman
-                            <a href="https://m-nucuisine.sodexomyway.com/images/Hinman2_tcm238-12915.htm"><div class="menu">Menu</div></a>
+                            <a href="https://m-nucuisine.sodexomyway.com/images/Hinman3_tcm238-12915.htm">
+                                <div class="menu">Menu</div>
+                            </a>
                         </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse collapse in">
+                        <div id="hinman" class="panel-body">
+                            <!-- This is where body text goes -->
+                        </div>
                     </div>
                 </div>
 
@@ -61,8 +65,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            Allison Dining Hall
-                            <a href="https://m-nucuisine.sodexomyway.com/images/Allison2_tcm238-9944.htm"><div class="menu">Menu</div></a>
+                            Allison
+                            <a href="https://m-nucuisine.sodexomyway.com/images/Allison3_tcm238-9944.htm">
+                                <div class="menu">Menu</div>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -71,8 +77,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            Elder Dining Hall
-                            <a href="https://m-nucuisine.sodexomyway.com/images/Elder2_tcm238-12911.htm"><div class="menu">Menu</div></a>
+                            Elder
+                            <a href="https://m-nucuisine.sodexomyway.com/images/Elder3_tcm238-12911.htm">
+                                <div class="menu">Menu</div>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -81,8 +89,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            Plex - East Side
-                            <a href="https://m-nucuisine.sodexomyway.com/images/Foster_East2_tcm238-12913.htm"><div class="menu">Menu</div></a>
+                            Plex East
+                            <a href="https://m-nucuisine.sodexomyway.com/images/Foster_East3_tcm238-12913.htm">
+                                <div class="menu">Menu</div>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -91,8 +101,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            Plex - West Side
-                            <a href="https://m-nucuisine.sodexomyway.com/images/Foster_West2_tcm238-12914.htm"><div class="menu">Menu</div></a>
+                            Plex West
+                            <a href="https://m-nucuisine.sodexomyway.com/images/Foster_West3_tcm238-12914.htm">
+                                <div class="menu">Menu</div>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -101,8 +113,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            Sargent Dining Hall
-                            <a href="https://m-nucuisine.sodexomyway.com/images/Sargent2_tcm238-12910.htm"><div class="menu">Menu</div></a>
+                            Sargent
+                            <a href="https://m-nucuisine.sodexomyway.com/images/Sargent3_tcm238-12910.htm">
+                                <div class="menu">Menu</div>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -111,8 +125,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            Willard Dining Hall
-                            <a href="https://m-nucuisine.sodexomyway.com/images/Willard1_tcm238-12912.htm"><div class="menu">Menu</div></a>
+                            Willard
+                            <a href="https://m-nucuisine.sodexomyway.com/images/Willard3_tcm238-12912.htm">
+                                <div class="menu">Menu</div>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -121,7 +137,7 @@
     </body>
 
     <!-- Bootstrap Core Javascript -->
-    <script src="jquery-1.10.1.min.js"></script> // Change this back to the link when you publish!!!
+    <script src="jquery-1.10.1.min.js"></script> <!-- Change this back to the link when you publish!!! -->
     <script src="js/bootstrap.js"></script>
 
     <!-- User Javascript -->
