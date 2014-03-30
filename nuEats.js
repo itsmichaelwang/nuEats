@@ -10,17 +10,68 @@ function onCreate() {
                     [10, 45, "7.00"],
                     [16, 45, "9.00"],
                     [19, 30, "7.00"],
-                    [26, 00, "N/A" ] ]; // 2:00 AM, the NEXT day!
-    createEqRateBars(EqRates);
+                    [26, 00, "N/A" ]];  // 2:00 AM, the NEXT day!
+    var sundayEqRates = 
+                  [ [7,  30, "9.00"],
+                    [26, 00, "N/A" ]];  // Meals are $9 all day Sunday
+
+    // Use a different set of bars on Sunday
+    var today = new Date();
+    if (today.getDay() == 0) {
+        createEqRateBars(sundayEqRates);
+    } else {
+        createEqRateBars(EqRates);
+    }
 
     // Set the position of an arrow pointing to the correct time block
     setArrowPosition(EqRates);
-    setInterval(function() { setArrowPosition(EqRates); }, 1000);   // Update it every second
+    setInterval(function() { setArrowPosition(EqRates); }, 60000);  // Update it every minute
     $(window).resize(function() { setArrowPosition(EqRates); });    // Update it upon window resize
 
+    // Procedurally indicate whether a dining hall is open or closed and provide relevant info
+    //                      Hall/Meal     Mon-Thur       Fri            Sat            Sun
+    var operatingHours =  [ [["1835 Hinman"],
+                            ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
+                            ["Lunch"    , "10:45-13:15", "10:45-13:15", "N/A"        , "N/A"        ],
+                            ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
+                            ["Dinner"   , "16:45-20:00", "16:45-19:00", "N/A"        , "N/A"        ]],
+
+                            [["Allison"],
+                            ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
+                            ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
+                            ["Lunch"    , "11:15-13:15", "11:15-13:45", "10:45-13:30", "N/A"        ],
+                            ["Dinner"   , "16:45-19:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
+
+                            [["Elder"],
+                            ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
+                            ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]],
+
+                            [["Plex East"],
+                            ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
+                            ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
+                            ["Dinner"   , "16:45-20:00", "16:45-20:00", "16:45-19:00", "16:45-19:00"]],
+
+                            [["Plex West"],
+                            ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
+                            ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
+                            ["Lunch"    , "11:15-13:15", "11:15-13:15", "10:45-13:30", "N/A"        ],
+                            ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
+                            ["Dinner"   , "17:15-19:30", "17:15-19:00", "17:15-19:00", "16:45-19:30"],
+                            ["Late Night","20:00-23:30", "N/A"        , "N/A"        , "N/A"        ]],
+
+                            [["Sargent"],
+                            ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
+                            ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
+                            ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
+                            ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
+                            ["Dinner"   , "16:45-20:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
+
+                            [["Willard"],
+                            ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
+                            ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]] ];
+    createPanels(operatingHours);
 
 }
-
 
 /*
  * Create a clock, with special formatting
@@ -39,14 +90,23 @@ function createClock() {
 
     var AMPM = getAMPM(h);
     h = h % 12;
+    if (h == 0) {
+        h = 12;
+    }
 
     // Controls the final output of the clock's text
     return (day).bold() + ", " + o + " " + d + ", " + h + ":" + m + ":" + s + " " + AMPM;
 }
 
 // A series of helper functions
-function returnDay(day) { return ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day]; }
-function returnMonth(month) { return ["January","February","March","April","May","June","July","August","September","October","November","December"][month]; }
+function returnDay(day) {
+    return ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day];
+}
+
+function returnMonth(month) {
+    return ["January","February","March","April","May","June","July","August","September","October","November","December"][month];
+}
+
 function formatDate(date) {
     digit = date % 10;
     if (digit == 1) {
@@ -136,7 +196,6 @@ function createEqRateBars(EqRates) {
     }).appendTo("#" + name); // Just to keep thing simple, we'll make it a subclass of the last horizontal bar
 }
 
-
 /*
  * Set arrow location depending on equivalency meal value
  */
@@ -177,4 +236,17 @@ function dateInMin(dateObject) {
 
 function timeInMin(hours, minutes) {
     return hours * 60 + minutes;
+}
+
+/*
+ * Procedurally display dining hall hours
+ */
+function createPanels(operatingHours) {
+
+    // Create a panel for each store/dining hall and update it with relevant information
+    var numOfStores = operatingHours.length;
+    
+    for (var i = 0; i < numOfStores; i++) {
+
+    }
 }
