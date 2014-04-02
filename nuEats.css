@@ -1,5 +1,5 @@
 #clock {
-	font-size: 1em;
+	font-size: 1.2em;
 }
 
 /* Control the label FONT above the timeline bars */
@@ -7,7 +7,12 @@
 	margin-top: 5px;
 	margin-bottom: 20px;
 
-	font-size: 1em;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.category-label {
+	font-size: 1.2em;
 	font-weight: bold;
 }
 
@@ -62,12 +67,17 @@
 	font-size: 0.75em;
 }
 
-/* Formatting concerning the "Menu" button */ 
+/* Formatting concerning the "Menu" button */
 .menu {
-	font-weight: bold;
 	float: right;
+	font-weight: bold
 }
 
-.menu:hover {
-	text-decoration: underline;
+/* Formatting concerning the panel content */
+.open {
+	color: green;
+}
+
+.closed {
+	color: red;
 }

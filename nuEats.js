@@ -28,30 +28,30 @@ function onCreate() {
     setInterval(function() { setArrowPosition(EqRates); }, 60000);  // Update it every minute
     $(window).resize(function() { setArrowPosition(EqRates); });    // Update it upon window resize
 
-    // Procedurally indicate whether a dining hall is open or closed and provide relevant info
+    // Procedurally indicate whether a dining hall is open or closed and provide relevant info [7][]
     //                      Hall/Meal     Mon-Thur       Fri            Sat            Sun
-    var operatingHours =  [ [["1835 Hinman"],
+    var operatingHours =  [ ["1835 Hinman", "https://m-nucuisine.sodexomyway.com/images/Hinman1_tcm238-12915.htm",
                             ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "N/A"        , "N/A"        ],
                             ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-19:00", "N/A"        , "N/A"        ]],
 
-                            [["Allison"],
+                            ["Allison"  , "https://m-nucuisine.sodexomyway.com/images/Allison1_tcm238-9944.htm",
                             ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "11:15-13:15", "11:15-13:45", "10:45-13:30", "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
 
-                            [["Elder"],
+                            ["Elder"    , "https://m-nucuisine.sodexomyway.com/images/Elder1_tcm238-12911.htm",
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]],
 
-                            [["Plex East"],
+                            ["Plex East", "https://m-nucuisine.sodexomyway.com/images/Foster_East1_tcm238-12913.htm",
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-20:00", "16:45-19:00", "16:45-19:00"]],
 
-                            [["Plex West"],
+                            ["Plex West", "https://m-nucuisine.sodexomyway.com/images/Foster_West1_tcm238-12914.htm",
                             ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "10:45-13:30", "N/A"        ],
@@ -59,14 +59,14 @@ function onCreate() {
                             ["Dinner"   , "17:15-19:30", "17:15-19:00", "17:15-19:00", "16:45-19:30"],
                             ["Late Night","20:00-23:30", "N/A"        , "N/A"        , "N/A"        ]],
 
-                            [["Sargent"],
+                            ["Sargent"  , "https://m-nucuisine.sodexomyway.com/images/Sargent1_tcm238-12910.htm",
                             ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
                             ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
 
-                            [["Willard"],
+                            ["Willard"  , "https://m-nucuisine.sodexomyway.com/images/Willard1_tcm238-12912.htm",
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]] ];
     createPanels(operatingHours);
@@ -181,7 +181,7 @@ function createEqRateBars(EqRates) {
 
         jQuery('<div/>', {
             class: 'priceText',
-            text: '$' + price
+            text: "$" + price
         }).appendTo("#" + name);
     }
 
@@ -239,14 +239,123 @@ function timeInMin(hours, minutes) {
 }
 
 /*
- * Procedurally display dining hall hours
+ * Procedurally create a panel for each store/dining hall and update it
  */
 function createPanels(operatingHours) {
 
-    // Create a panel for each store/dining hall and update it with relevant information
-    var numOfStores = operatingHours.length;
-    
-    for (var i = 0; i < numOfStores; i++) {
+    var numOfStores = operatingHours.length;    // Keep track of the number of stores/dining halls
 
+    // Create an empty panel "container" for each facility
+    for (var i = 0; i < numOfStores; i++) {
+        jQuery('<div/>', {
+            class: 'panel panel-default'
+        }).appendTo('#accordion');
     }
+
+    // Now create an empty heading "container" for each empty panel
+    jQuery('<div/>', {
+        class: 'panel-heading'
+    }).appendTo('.panel.panel-default');
+
+    // Iteratively create an h4 div with the name of the dining hall
+    $('.panel-heading').each(function(index) {
+
+        jQuery('<h4/>', {
+            class: 'panel-title',
+            text: operatingHours[index][0]      // Name of dining hall
+        }).appendTo($(this));
+    });
+
+    // Iteratively add a link to each dining hall's menu in the title bar
+    $('.panel-title').each(function(index) {
+
+        jQuery('<div/>', {                       
+            id: index,
+            class: 'panel-title menu'
+        }).appendTo($(this));
+
+        menuURL = operatingHours[index][1];
+        schURL = "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png";
+
+        $("#" + index).html("<a href=" + menuURL + ">Menu</a> - <a href=" + schURL + ">Schedule</a>");
+
+    });
+
+    // Add empty panel bodies
+    jQuery('<div/>', {
+        class: 'panel-collapse collapse in'
+    }).appendTo('.panel.panel-default');
+    
+    // Iteratively fill the panel with information about whether the dining hall is open or not, and a link to a schedule
+    $('.panel-collapse.collapse.in').each(function(index) {
+
+        var output = returnOpenOrClosed(operatingHours, index);
+
+        if (output[0] == 0) {
+
+            jQuery('<div/>', {
+                class: 'panel-body open',
+                text: output[1]
+            }).appendTo($(this));
+
+        } else if (output[0] == 1) {
+
+            jQuery('<div/>', {
+                class: 'panel-body closed',
+                text: output[1]
+            }).appendTo($(this));
+        }
+    });
+}
+
+// Given the an index in 'operatingHours' corresponding to an establishment, find out its open or close status
+function returnOpenOrClosed(operatingHours, hallCode) {
+    
+    // Get the current time as a number of minutes past midnight, and compare it to the dining hall's open and close times
+    var today = new Date();
+
+    var day = today.getDay();
+    var hour = today.getHours();
+    var minute = today.getMinutes();
+
+    var currentMin = timeInMin(hour, minute);
+
+    // Used to select a day in the operatingHours array
+    var dayCode;
+    if (day >= 1 && day <= 4) { // Monday-Thursday
+        dayCode = 1;
+    } else if (day == 5) {  // Friday
+        dayCode = 2;
+    } else if (day == 6) {  // Saturday
+        dayCode = 3;
+    } else if (day == 0) {  // Sunday
+        dayCode = 4;
+    }
+
+    // Count the number of meal "blocks" for iteration purposes
+    var mealOptions = operatingHours[hallCode].length;  
+
+    // Now iterate and find out if the selected dining hall is open
+    for (var i = 2; i < mealOptions; i++) {
+        var openCloseTimes = parseTime(operatingHours[hallCode][i][dayCode]);
+
+        // If a dining hall is open
+        if (currentMin >= openCloseTimes[0] && currentMin < openCloseTimes[1]) {
+            return [0, "OPEN - " + operatingHours[hallCode][i][0]];
+        }
+    }
+    return [1, "CLOSED"];
+}
+
+// Desearializes the time in 'operatingHours' in a meaningful way -- either it is "N/A" or it is a string representation of a time
+// In the latter case, convert time to minutes after midnight, for easy comparing
+function parseTime(str) {
+    if (str === "N/A") {
+        var output = [0, 0];
+    } else {
+        var res = str.split(/-|:/);
+        var output = [timeInMin(parseInt(res[0]), parseInt(res[1])), 
+                      timeInMin(parseInt(res[2]), parseInt(res[3]))]
+    }
+    return output;
 }
