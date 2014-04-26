@@ -6,13 +6,13 @@ function onCreate() {
 
     // Dynamically create equivalency-rate bars from array data
     //              Time     Equivalency Rate
-    var EqRates = [ [7,  30, "5.00"],
-                    [10, 45, "7.00"],
-                    [16, 45, "9.00"],
-                    [19, 30, "7.00"],
+    var EqRates = [ [7,  30, "5"],
+                    [10, 45, "7"],
+                    [16, 45, "9"],
+                    [19, 30, "7"],
                     [26, 00, "N/A" ]];  // 2:00 AM, the NEXT day!
     var sundayEqRates = 
-                  [ [7,  30, "9.00"],
+                  [ [7,  30, "9"],
                     [26, 00, "N/A" ]];  // Meals are $9 all day Sunday
 
     // Use a different set of bars on Sunday
@@ -30,28 +30,29 @@ function onCreate() {
 
     // Procedurally indicate whether a dining hall is open or closed and provide relevant info [7][]
     //                      Hall/Meal     Mon-Thur       Fri            Sat            Sun
-    var operatingHours =  [ ["1835 Hinman", "https://m-nucuisine.sodexomyway.com/images/Hinman1_tcm238-12915.htm",
+    var diningHallHours  =  [
+                            ["1835 Hinman", "https://m-nucuisine.sodexomyway.com/images/Hinman4_tcm238-12915.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "N/A"        , "N/A"        ],
                             ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-19:00", "N/A"        , "N/A"        ]],
 
-                            ["Allison"  , "https://m-nucuisine.sodexomyway.com/images/Allison1_tcm238-9944.htm",
+                            ["Allison"  , "https://m-nucuisine.sodexomyway.com/images/Allison4_tcm238-9944.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "11:15-13:15", "11:15-13:45", "10:45-13:30", "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
 
-                            ["Elder"    , "https://m-nucuisine.sodexomyway.com/images/Elder1_tcm238-12911.htm",
+                            ["Elder"    , "https://m-nucuisine.sodexomyway.com/images/Elder4_tcm238-12911.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]],
 
-                            ["Plex East", "https://m-nucuisine.sodexomyway.com/images/Foster_East1_tcm238-12913.htm",
+                            ["Plex East", "https://m-nucuisine.sodexomyway.com/images/Foster_East4_tcm238-12913.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-20:00", "16:45-19:00", "16:45-19:00"]],
 
-                            ["Plex West", "https://m-nucuisine.sodexomyway.com/images/Foster_West1_tcm238-12914.htm",
+                            ["Plex West", "https://m-nucuisine.sodexomyway.com/images/Foster_West4_tcm238-12914.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "10:45-13:30", "N/A"        ],
@@ -59,18 +60,116 @@ function onCreate() {
                             ["Dinner"   , "17:15-19:30", "17:15-19:00", "17:15-19:00", "16:45-19:30"],
                             ["Late Night","20:00-23:30", "N/A"        , "N/A"        , "N/A"        ]],
 
-                            ["Sargent"  , "https://m-nucuisine.sodexomyway.com/images/Sargent1_tcm238-12910.htm",
+                            ["Sargent"  , "https://m-nucuisine.sodexomyway.com/images/Sargent4_tcm238-12910.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
                             ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
 
-                            ["Willard"  , "https://m-nucuisine.sodexomyway.com/images/Willard1_tcm238-12912.htm",
+                            ["Willard"  , "https://m-nucuisine.sodexomyway.com/images/Willard4_tcm238-12912.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]] ];
-    createPanels(operatingHours);
 
+    var cstorecafeHours  =  [
+                            ["Hinman C-Store", "#", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "7:30-24:00" , "7:30-19:00" , "10:45-19:00", "11:00-24:00"]],
+
+                            ["Plex C-Store", "#", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "7:30-24:00" , "7:30-19:00" , "7:30-19:00" , "11:00-24:00"]],
+
+                            ["Willard C-Store", "#", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
+                            ["business" , "16:45-26:00", "16:45-19:00", "N/A"        , "19:00-26:00"]],
+
+                            ["Crowe Cafe", "#", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "8:00-17:00" , "8:00-15:00" , "N/A"        , "N/A"        ]],
+
+                            ['"Secret" Einstein Bros', "#", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "8:00-16:00" , "8:00-15:00" , "N/A"        , "N/A"        ]],
+
+                            ["Fran's Cafe", "https://m-nucuisine.sodexomyway.com/images/Fran%27s%20Caf%C3%A9%2011x17_tcm238-13472.jpg", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "20:00-26:00", "N/A"        , "N/A"        , "19:00-26:00"]],
+
+                            ["Lisa's Cafe", "https://m-nucuisine.sodexomyway.com/images/Lisa%27s%20Online%20Menu_tcm238-15568.pdf", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "11:00-26:00", "11:00-26:00", "11:00-26:00", "12:00-26:00"]],
+
+                            ["Plaza Cafe", "#", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "8:30-24:00" , "8:30-15:00" , "12:00-16:00", "17:00-24:00"]],
+
+                            ["Tech Express", "https://m-nucuisine.sodexomyway.com/images/Tech1_tcm238-9928.htm", "https://m-nucuisine.sodexomyway.com/images/Cafe%20and%20C-Store%20Hours%20of%20Operation%20-%20Website_tcm238-13183.png",
+                            ["business" , "7:30-18:30" , "7:30-15:00" , "N/A"        , "N/A"        ]]];
+
+    var norriscenterHours = [
+                            ["Willie's Food Court", "#", "https://m-nucuisine.sodexomyway.com/images/Norris%20Hours%20of%20Operation%20-%20Website_tcm238-13181.png",
+                            ["business" , "11:00-15:00", "11:00-15:00", "N/A"        , "11:00-15:00"]],
+
+                            ["Paws 'N Go C-Store", "#", "https://m-nucuisine.sodexomyway.com/images/Norris%20Hours%20of%20Operation%20-%20Website_tcm238-13181.png",
+                            ["business" , "8:00-23:00" , "8:00-21:00" , "10:00-21:00", "11:00-23:00"]],
+
+                            ["Subway", "#", "https://m-nucuisine.sodexomyway.com/images/Norris%20Hours%20of%20Operation%20-%20Website_tcm238-13181.png",
+                            ["business" , "11:00-21:00", "11:00-21:00", "11:00-21:00", "11:00-21:00"]],
+
+                            ["Dunkin Donuts", "#", "https://m-nucuisine.sodexomyway.com/images/Norris%20Hours%20of%20Operation%20-%20Website_tcm238-13181.png",
+                            ["business" , "8:00-23:45" , "8:00-19:00" , "12:00-19:00", "12:00-23:45"]],
+
+                            ["NorShore Pizza Co.", "https://m-nucuisine.sodexomyway.com/images/NSPC%20Menu%20Board%202013%20-%202014_tcm238-12997.png", "https://m-nucuisine.sodexomyway.com/images/Norris%20Hours%20of%20Operation%20-%20Website_tcm238-13181.png",
+                            ["business" , "11:00-23:00", "11:00-21:00", "10:00-21:00", "11:00-23:00"]],
+
+                            ["Norbucks", "#", "https://m-nucuisine.sodexomyway.com/images/Norris%20Hours%20of%20Operation%20-%20Website_tcm238-13181.png",
+                            ["business" , "8:00-23:45" , "8:00-21:00" , "9:00-21:00" , "10:00-23:45"]],
+
+                            ["Frontera Fresco", "https://m-nucuisine.sodexomyway.com/images/frontera_menu_tcm238-4571.pdf", "https://m-nucuisine.sodexomyway.com/images/Norris%20Hours%20of%20Operation%20-%20Website_tcm238-13181.png",
+                            ["business" , "11:00-19:00", "11:00-19:00", "11:00-15:00", "N/A"        ]]];
+    
+    // Dining hall buttons
+    $(document).on('click', '#dining-halls', function() {
+        createPanels(diningHallHours);
+    });
+    $(document).on('click', '#c-stores', function() {
+        createPanels(cstorecafeHours);
+    })
+    $(document).on('click', '#norris', function() {
+        createPanels(norriscenterHours);
+    });
+
+    $('#dining-halls').click();
+
+    // Just for fun...
+    var today = new Date();
+    var hour = today.getHours();
+    var minute = formatTime(today.getMinutes());
+    var AMPM = getAMPM(hour);
+    hour = hour % 12;
+    if (hour == 0) {
+        hour = 12;
+    }
+    
+    var messages = ["This web page is 100% gluten free.",
+                    "The average person needs about 2000 calories per day.",
+                    "Shouldn't you be studying instead of reading these?",
+                    "If you can't do the time, don't do the crime.",
+                    "Sodexo is a French company.",
+                    "Don't forget to spend your equivalency meals on Saturdays!",
+                    "This PSA has been brought to you from me for free, you see?",
+                    "For a lighter but equally fulfilling experience, please visit the no-calorie alternative to nuEats, nuEats Zero.",
+                    "Shouldn't I be studying instead of making more of these?",
+                    "✓ Seen " + hour + ":" + minute + " " + AMPM,
+                    "This website is like a fine wine. It will get better as you visit it.",
+                    "4 of Illinois's last 7 governors have been convicted of crimes. Welcome!"];
+    var random = Math.floor((Math.random()*messages.length) + 1) - 1;
+    $('#footer-left').text("-Fun Fact: " + messages[random]);
+
+    // Implement a favorites button
+    var url = "https://googledrive.com/host/0By7Z_HHj2VhnWmlhbWl4aF8xdFU/nuEats.html";
+    var pageName = "nuEats";
+    $(document).on('click', '#bookmark', function() {
+        if (window.external) {
+            window.external.AddFavorite(url, pageName)  
+        } else {
+            alert("Sorry! Your browser doesn't support this. Bookmark it through your browser instead.");
+        }
+    });
 }
 
 /*
@@ -108,6 +207,10 @@ function returnMonth(month) {
 }
 
 function formatDate(date) {
+    if (date == 11 || date == 12 || date == 13) {
+        return date + "th";
+    }
+
     digit = date % 10;
     if (digit == 1) {
         return date + "st";
@@ -171,6 +274,7 @@ function createEqRateBars(EqRates) {
         var AMPM = getAMPM(EqRates[i][0]);          // Is it AM or PM?
 
         jQuery('<div/>', {
+            id: "timeText" + i,
             class: 'timeText',
             text: hour + ":" + minute + " " + AMPM
         }).appendTo("#" + name);
@@ -212,6 +316,11 @@ function setArrowPosition(EqRates) {
     var closeMin = timeInMin(EqRates[rows - 1][0], EqRates[rows - 1][1]);   // 2:00 AM the NEXT DAY - same format
     var DAY_IN_MINUTES = 24*60;                                             // Will be useful later on for subtracting
 
+    // If it is between midnight and 2AM the next day, correct for that by adding a day of minutes
+    if (currentMin >= 0 && currentMin < 120) {
+        currentMin = currentMin + DAY_IN_MINUTES;
+    }
+
     // If it is after 7:30 AM OR before 2:00 AM on the SAME DAY, show the arrow, otherwise hide it
     if (currentMin >= openMin || currentMin < closeMin - DAY_IN_MINUTES) {
 
@@ -222,10 +331,11 @@ function setArrowPosition(EqRates) {
          * 4) Multiply by 100 so we have an actual percent
          * 5) Set this absolute number to the left-margin shift
          */
-        var timelinePercent = [(currentMin - openMin)/(closeMin - openMin) - (5/$("#rate-bars-container").width())] * 100;
+        var timelinePercent = [(currentMin - openMin)/(closeMin - openMin) - (7.5/$("#rate-bars-container").width())] * 100;
         $("#arrow").css("margin-left", timelinePercent + "%");
     } else {
-        $("#arrow").hide();
+        var startPercent = [(openMin - openMin)/(closeMin - openMin) - (7.5/$("#rate-bars-container").width())] * 100;
+        $("#arrow").css("margin-left", startPercent + "%");
     }
 }
 
@@ -242,6 +352,7 @@ function timeInMin(hours, minutes) {
  * Procedurally create a panel for each store/dining hall and update it
  */
 function createPanels(operatingHours) {
+    document.getElementById("accordion").innerHTML = "";
 
     var numOfStores = operatingHours.length;    // Keep track of the number of stores/dining halls
 
@@ -257,11 +368,11 @@ function createPanels(operatingHours) {
         class: 'panel-heading'
     }).appendTo('.panel.panel-default');
 
-    // Iteratively create an h4 div with the name of the dining hall
+    // Iteratively create a div with the name of the dining hall
     $('.panel-heading').each(function(index) {
 
-        jQuery('<h4/>', {
-            class: 'panel-title',
+        jQuery('<div/>', {
+            class: 'panel-title left',
             text: operatingHours[index][0]      // Name of dining hall
         }).appendTo($(this));
     });
@@ -275,10 +386,14 @@ function createPanels(operatingHours) {
         }).appendTo($(this));
 
         menuURL = operatingHours[index][1];
-        schURL = "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png";
+        schURL = operatingHours[index][2];
 
-        $("#" + index).html("<a href=" + menuURL + ">Menu</a> - <a href=" + schURL + ">Schedule</a>");
-
+        // If no menu exists, don't show the link for it
+        if (menuURL === "#") {
+            $("#" + index).html("<a href=" + schURL + ">Schedule</a>");
+        } else {
+            $("#" + index).html("<a href=" + menuURL + ">Menu</a> - <a href=" + schURL + ">Schedule</a>");
+        }
     });
 
     // Add empty panel bodies
@@ -298,64 +413,159 @@ function createPanels(operatingHours) {
                 text: output[1]
             }).appendTo($(this));
 
+            jQuery('<div/>', {
+                class: 'panel-body neutral',
+                text: output[2]
+            }).appendTo($(this));
+
         } else if (output[0] == 1) {
 
             jQuery('<div/>', {
                 class: 'panel-body closed',
                 text: output[1]
             }).appendTo($(this));
+
+            jQuery('<div/>', {
+                class: 'panel-body neutral',
+                text: output[2]
+            }).appendTo($(this));
         }
     });
 }
 
-// Given the an index in 'operatingHours' corresponding to an establishment, find out its open or close status
+/* 
+ * Interate through each dining facility in the array 'operatingHours', (facilities are ID'd by their location or 'hallCode' in 'operatingHours')
+ * Return a string saying whether the dining facility is open or not
+ */
 function returnOpenOrClosed(operatingHours, hallCode) {
     
-    // Get the current time as a number of minutes past midnight, and compare it to the dining hall's open and close times
+    // Get the current time and convert it into minutes after midnight (i.e. 8:00 AM is 8 * 60 = 480) for easy ordering
     var today = new Date();
-
-    var day = today.getDay();
     var hour = today.getHours();
     var minute = today.getMinutes();
 
     var currentMin = timeInMin(hour, minute);
 
-    // Used to select a day in the operatingHours array
-    var dayCode;
-    if (day >= 1 && day <= 4) { // Monday-Thursday
-        dayCode = 1;
-    } else if (day == 5) {  // Friday
-        dayCode = 2;
-    } else if (day == 6) {  // Saturday
-        dayCode = 3;
-    } else if (day == 0) {  // Sunday
-        dayCode = 4;
-    }
+    // Since 'operatingHours' groups Mon-Thurs (as per Sodexo schedule), 'day' needs to be converted to 'dayCode' to select the correct day's schedule
+    var day = today.getDay();
+    var dayCode = getDayCode(day);
 
-    // Count the number of meal "blocks" for iteration purposes
-    var mealOptions = operatingHours[hallCode].length;  
+    // Specify where to start and end interation (over the range of block types)
+    var startBlock = 3;  // Indices 0, 1, and 2 are reserved for dining hall metadata
+    var blocks = operatingHours[hallCode].length;
 
-    // Now iterate and find out if the selected dining hall is open
-    for (var i = 2; i < mealOptions; i++) {
-        var openCloseTimes = parseTime(operatingHours[hallCode][i][dayCode]);
+    // Now iterate over all blocks for a given dining hall and day and determine if the facility is open/closed
+    for (var i = startBlock; i < blocks; i++) {
+        
+        var blockOpenMin = timeToMin(operatingHours[hallCode][i][dayCode])[0];          // start time of current block (in minutes after midnight)
+        var blockCloseMin = timeToMin(operatingHours[hallCode][i][dayCode])[1];         // end time of current block (in minutes after midnight)
 
-        // If a dining hall is open
-        if (currentMin >= openCloseTimes[0] && currentMin < openCloseTimes[1]) {
-            return [0, "OPEN - " + operatingHours[hallCode][i][0]];
+        if (currentMin >= blockOpenMin && currentMin < blockCloseMin) {                 // Case 1: A facility is open, find when it closes
+
+            var blockName = operatingHours[hallCode][i][0];
+            var closeStr = closeTime(operatingHours[hallCode][i][dayCode]);
+
+            return [0, "OPEN", "- for " + blockName + " until " + closeStr];
         }
     }
-    return [1, "CLOSED"];
+
+    for (var i = day; i % 7 != day - 1; i++) {
+
+        var dayCode = getDayCode(i % 7);
+        for (var j = startBlock; j < blocks; j++) {
+
+            var blockOpenMin = timeToMin(operatingHours[hallCode][j][dayCode])[0];  // start time of current block (in minutes after midnight)
+            if (!(blockOpenMin === "N/A")) {
+                
+
+                if (i == day && currentMin < blockOpenMin) {
+                    var blockName = operatingHours[hallCode][j][0];
+                    var openStr = openTime(operatingHours[hallCode][j][dayCode]);
+
+                    return [1, "CLOSED", "- opens for " + blockName + " at " + openStr];
+                } else if (i > day) {
+                    var blockName = operatingHours[hallCode][j][0];
+                    var openStr = openTime(operatingHours[hallCode][j][dayCode]);
+                    var openDay = returnDay(i % 7);
+
+                    return [1, "CLOSED", "- opens for " + blockName + " on " + openDay + " at " + openStr];
+                }
+            }
+        }
+    }
 }
 
-// Desearializes the time in 'operatingHours' in a meaningful way -- either it is "N/A" or it is a string representation of a time
-// In the latter case, convert time to minutes after midnight, for easy comparing
-function parseTime(str) {
+/*
+ * Deserializes the time in 'operatingHours' by converting the start and end times to minutes after midnight; result displayed in array of size 2:
+ * [openMin, closeMin] for the given 'str'
+ */
+function getDayCode(day) {
+    if (day >= 1 && day <= 4) { // Monday-Thursday is in col 1, col 0 reserved Dining Hall and "block type" (i.e. breakfast, brunch, late night) names
+        dayCode = 1;
+    } else if (day == 5) {      // Friday is in col 2
+        dayCode = 2;
+    } else if (day == 6) {      // Saturday is in col 3
+        dayCode = 3;
+    } else if (day == 0) {      // Sunday is column 4
+        dayCode = 4;
+    }
+    return dayCode;
+}
+
+function timeToMin(str) {
     if (str === "N/A") {
-        var output = [0, 0];
+        var output = ["N/A", "N/A"];
     } else {
         var res = str.split(/-|:/);
         var output = [timeInMin(parseInt(res[0]), parseInt(res[1])), 
                       timeInMin(parseInt(res[2]), parseInt(res[3]))]
     }
     return output;
+}
+
+// Deserializes the time in 'operatingHours' by converting start and end times to easily-readable strings
+function openTime(str) {
+    if (str === "N/A") {
+        return str;
+    } else {
+        var res = str.split(/-|:/);
+
+        var hour = res[0];
+        var min = res[1];
+        var AMPM = getAMPM(hour);
+
+        if (hour == 24 && min == 0) {
+            return "midnight";
+        }
+        
+        hour = hour % 12;
+        if (hour == 0) {
+            hour = 12;
+        }
+
+        return hour + ":" + min + " " + AMPM;
+    }
+}
+
+function closeTime(str) {
+    if (str === "N/A") {
+        return str;
+    } else {
+        var res = str.split(/-|:/);
+
+        var hour = res[2];
+        var min = res[3];
+        var AMPM = getAMPM(hour);
+
+        if (hour == 24 && min == 0) {
+            return "midnight";
+        }
+        
+        hour = hour % 12;
+        if (hour == 0) {
+            hour = 12;
+        }
+
+        return hour + ":" + min + " " + AMPM;
+    }
 }

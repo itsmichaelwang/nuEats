@@ -1,28 +1,45 @@
+body {
+	background-color: #d3c7e9;
+} 
+
 #clock {
-	font-size: 1.2em;
+	font-size: 1em;
 }
 
-/* Control the label FONT above the timeline bars */
+/* Button formatting */
+.btn {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+.header-btn {
+	margin-top: 8px;
+	margin-left: 5px;
+	float: right;
+}
+
+/* Control the label ABOVE the timeline bars (i.e "Equivalency Meal Value") */
 #rate-bars-label {
 	margin-top: 5px;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 
-	font-size: 1.2em;
+	font-size: 1em;
 	font-weight: bold;
 }
 
-.category-label {
-	font-size: 1.2em;
-	font-weight: bold;
+/* Control the well AROUND the timeline bars */
+#timeline-well {
+	margin-bottom: 10px;
+	padding-bottom: 5px;
 }
 
-/* Format each equivalency-rate bar as a group */
+/* Format the timeline bars themselves */
 .rate-bars {
-	height: 1em;
+	height: 20px;
 	float: left;
 }
 
-/* Set each bar's color individually; add more CSS if you add more time blocks */
+/* Set each bar's color individually; change CSS if you change the # of time blocks */
 /* LIGHT GREEN */
 #block0 {
 	background-color: #40d351;
@@ -43,9 +60,9 @@
 	background-color: #2e973a;
 }
 
-/* Control the FONT surrounding the timeline bars */
+/* Control the font WITHIN the timeline bars */
 .timeText {
-	margin-top: -1.5em;
+	margin-top: -1.5em;	/* Shift the time text ABOVE the bars */
 	margin-left: 5px;	/* Some space makes it look better */
 
 	font-size: 0.75em;
@@ -53,31 +70,72 @@
 }
 
 .timeText-right {
-	margin-top: -3.0em;
+	margin-top: -3.4em;
+	float: right;
 
 	font-size: 0.75em;
 	font-weight: bold;
-	float: right;
+}
+
+/* Not the prettiest... set width and translate '4:45 PM' to make it fit better */
+#timeText2 {
+	width: 50px;
+
+	-ms-transform: translate(-10px, 0px);		/* IE 9 */
+	-webkit-transform: translate(-10px, 0px);	/* Chrome, Safari, Opera */
+	transform: translate(-10px, 0px);
 }
 
 .priceText {
 	margin-left: 5px;
 
 	color: white;
-	font-size: 0.75em;
+	font-size: 1em;
 }
 
-/* Formatting concerning the "Menu" button */
+/* Format "Menu" and "Schedule" so it shifts right */
 .menu {
+	font-weight: normal;
+
+	color: #0000FF;
 	float: right;
-	font-weight: bold
 }
 
-/* Formatting concerning the panel content */
+/* Formatting concerning the panel content - .open and .closed are inner so padding is cut */
 .open {
+	float: left;
+	padding-right: 4px;
+	padding-bottom: 0px;
+
 	color: green;
 }
 
 .closed {
+	float: left;
+	padding-right: 4px;
+	padding-bottom: 0px;
+
 	color: red;
+}
+
+/* Footer formatting*/
+#footer-wrapper {
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+
+#footer-reft {
+	font-style: italic;
+	float: left;
+	width: 60%;
+}
+
+#footer-left {
+	font-style: italic;
+	float: left;
+	width: 60%;
+}
+
+#footer-right {
+	float: right;
 }
