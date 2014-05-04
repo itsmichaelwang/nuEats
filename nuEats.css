@@ -1,3 +1,4 @@
+
 body {
 	background-color: #d3c7e9;
 } 
@@ -12,7 +13,7 @@ body {
 	font-weight: bold;
 }
 
-.header-btn {
+#balance-btn {
 	margin-top: 8px;
 	margin-left: 5px;
 	float: right;
@@ -69,7 +70,7 @@ body {
 	font-weight: bold;
 }
 
-.timeText-right {
+.timeText-closing {
 	margin-top: -3.4em;
 	float: right;
 
