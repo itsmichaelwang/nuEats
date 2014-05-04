@@ -62,7 +62,7 @@ body {
 }
 
 /* Control the font WITHIN the timeline bars */
-.timeText {
+.time-text {
 	margin-top: -1.5em;	/* Shift the time text ABOVE the bars */
 	margin-left: 5px;	/* Some space makes it look better */
 
@@ -70,7 +70,7 @@ body {
 	font-weight: bold;
 }
 
-.timeText-closing {
+.time-text-closing {
 	margin-top: -3.4em;
 	float: right;
 
@@ -79,7 +79,7 @@ body {
 }
 
 /* Not the prettiest... set width and translate '4:45 PM' to make it fit better */
-#timeText2 {
+#time-text2 {
 	width: 50px;
 
 	-ms-transform: translate(-10px, 0px);		/* IE 9 */
@@ -87,7 +87,7 @@ body {
 	transform: translate(-10px, 0px);
 }
 
-.priceText {
+.price-text {
 	margin-left: 5px;
 
 	color: white;
@@ -120,23 +120,8 @@ body {
 }
 
 /* Footer formatting*/
-#footer-wrapper {
+#footer {
 	margin-top: -10px;
 	margin-bottom: 10px;
-}
-
-#footer-reft {
 	font-style: italic;
-	float: left;
-	width: 60%;
-}
-
-#footer-left {
-	font-style: italic;
-	float: left;
-	width: 60%;
-}
-
-#footer-right {
-	float: right;
 }

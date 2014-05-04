@@ -133,9 +133,6 @@ function onCreate() {
         createPanels(norriscenterHours);
     });
     $('#dining-halls').click();
-
-    // Just for fun...
-    $('#footer-left').text("This web page is 100% gluten free.");
 }
 
 /*
@@ -240,12 +237,13 @@ function createEqMealBars(EqMeals) {
                 }
             }).append(
                 $('<div/>', {
-                    class: 'timeText',
+                    id: "time-text" + i,
+                    class: 'time-text',
                     text: hour + ":" + minute + " " + AMPM
                 })
             ).append(
                 $('<div/>', {
-                    class: 'priceText',
+                    class: 'price-text',
                     text: "$" + price
                 })
             )
@@ -258,7 +256,7 @@ function createEqMealBars(EqMeals) {
     var AMPM = getAMPM(EqMeals[rows - 1][0]);       // Is it AM or PM?
     
     $('<div/>', {
-        class: 'timeText-closing',
+        class: 'time-text-closing',
         text: hour + ":" + minute + " " + AMPM
     }).appendTo("#block" + (rows - 2)); // Just to keep thing simple, we'll make it a subclass of the last horizontal bar
 }
