@@ -1,7 +1,12 @@
-
 body {
 	background-color: #d3c7e9;
 } 
+
+#title {
+	font-size: 2em;
+	position: absolute;
+	bottom: 0;
+}
 
 #clock {
 	font-size: 1em;
@@ -14,8 +19,8 @@ body {
 }
 
 #balance-btn {
-	margin-top: 6px;
-	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 	float: right;
 }
 
@@ -71,7 +76,7 @@ body {
 }
 
 .time-text-closing {
-	margin-top: -3.4em;
+	margin-top: -3.3em;
 	float: right;
 
 	font-size: 0.75em;
