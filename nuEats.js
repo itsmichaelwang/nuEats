@@ -1,8 +1,8 @@
 function onCreate() {
 
-    // Consider this to be the "main" function of sorts
-    document.getElementById("clock").innerHTML = createClock();                                     // Create a clock
-    setInterval(function() { document.getElementById("clock").innerHTML = createClock(); }, 500);   // Update it every half-second
+    // Create a clock and update it every 500ms
+    document.getElementById("clock").innerHTML = createClock();
+    setInterval(function() { document.getElementById("clock").innerHTML = createClock(); }, 500);
 
     // Dynamically create equivalency-rate bars from array data
     //              Time     Equivalency Rate
@@ -18,9 +18,9 @@ function onCreate() {
     // Use a different set of bars on Sunday
     var today = new Date();
     if (today.getDay() == 0) {
-        createEqRateBars(sundayEqRates);
+        createEqMealBars(sundayEqRates);
     } else {
-        createEqRateBars(EqRates);
+        createEqMealBars(EqRates);
     }
 
     // Set the position of an arrow pointing to the correct time block
@@ -173,40 +173,39 @@ function onCreate() {
 }
 
 /*
- * Create a clock, with special formatting
+ * Create a clock with formatting: "Sunday, January 1st, 12:00:00 AM"
  */
 function createClock() {
-    // Date format is "Sunday, January 1st, 12:00:00 AM"
     var today = new Date();
 
-    var day = returnDay(today.getDay());    // Convert day integer to string (i.e. Monday, Tuesday, Wednesday...)
-    var o = returnMonth(today.getMonth());  // Convert month integer to string (i.e. January, February, March...)
-    var d = formatDate(today.getDate());    // Add suffix to date (i.e. 1st, 2nd, 4th...)
-
+    var n = monthToStr(today.getMonth());  // Convert month integer code to string (i.e. January, February, March...)
+    var d = dateToStr(today.getDate());    // Add suffix to date (i.e. 1st, 2nd, 4th...)
+    var day = dayToStr(today.getDay());    // Convert day integer code to string (i.e. Monday, Tuesday, Wednesday...)
+    
     var h = today.getHours();
-    var m = formatTime(today.getMinutes()); // If minutes or seconds is single digit, add zero before
+    var m = formatTime(today.getMinutes());
     var s = formatTime(today.getSeconds());
 
-    var AMPM = getAMPM(h);
+    var AMPM = getAMPM(h);                  // Convert hour to 12-hour time format
     h = h % 12;
     if (h == 0) {
         h = 12;
     }
 
-    // Controls the final output of the clock's text
-    return (day).bold() + ", " + o + " " + d + ", " + h + ":" + m + ":" + s + " " + AMPM;
+    // Controls the Final formatting of the clock string
+    return (day).bold() + ", " + n + " " + d + ", " + h + ":" + m + ":" + s + " " + AMPM;
 }
 
-// A series of helper functions
-function returnDay(day) {
+// Helper functions for createClock()
+function dayToStr(day) {
     return ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day];
 }
 
-function returnMonth(month) {
+function monthToStr(month) {
     return ["January","February","March","April","May","June","July","August","September","October","November","December"][month];
 }
 
-function formatDate(date) {
+function dateToStr(date) {
     if (date == 11 || date == 12 || date == 13) {
         return date + "th";
     }
@@ -223,81 +222,79 @@ function formatDate(date) {
     }
 }
 
-// Add zeros before numbers where necessary
-function formatTime(i) {
-    if (i < 10) {
-        i = "0" + i;
+// If minutes or seconds variable is a single digit, add zero before it so it looks nice
+function formatTime(time) {
+    if (time >= 0 && time < 10) {
+        time = "0" + time;
     }
-    return i;
+    return time;
 }
 
-// Given an hour, determine if it is AM or PM
+// Given an hour, determine if it's in the AM or PM
 function getAMPM(hour) {
     return ["AM","PM"][(((hour % 24) >= 12) & 1)];
 }
 
-
 /*
- * Procedurally create equivalency rate exchange bars
+ * Procedurally create equivalency meal exchange rate bars
  */
-function createEqRateBars(EqRates) {
+function createEqMealBars(EqMeals) {
     
-    // EqRates is a "3-dimensional" array of time slots and corresponding equivalency rates
-    var rows = EqRates.length;
-    var columns = EqRates[0].length;
+    // EqMeals is a 2D array of values that shows HOW MUCH an equivalency meal is worth AT WHAT times
+    var rows = EqMeals.length;
+    var columns = EqMeals[0].length;
 
-    // Use the total length of all blocks to figure out what proportion each individual block takes up
-    var startMin = timeInMin(EqRates[0][0], EqRates[0][1]); // Converts hours and minutes to just minutes for easy math
-    var endMin = timeInMin(EqRates[rows - 1][0], EqRates[rows - 1][1]);   
+    // Calculate the total number of minutes Sodexo facilities are open
+    var startMin = timeInMin(EqMeals[0][0], EqMeals[0][1]);
+    var endMin = timeInMin(EqMeals[rows - 1][0], EqMeals[rows - 1][1]);   
     var totalMin = endMin - startMin;
 
-    // For each time block, create a div that represents that block graphically as a horizontal bar
+    // For each block, find its time as a proportion of the total time, and create a bar of proportional width
     for (var i = 0; i < rows - 1; i++) {
         
         // Set up variables that specify the horizontal bar's name and width, then add it
-        var name = "block" + i;
-        var blockMin = timeInMin(EqRates[i + 1][0], EqRates[i + 1][1]) - timeInMin(EqRates[i][0], EqRates[i][1]);
+        var blockMin = timeInMin(EqMeals[i + 1][0], EqMeals[i + 1][1]) - timeInMin(EqMeals[i][0], EqMeals[i][1]);
         var blockWidth = (blockMin / totalMin) * 100 + "%";
 
-        jQuery('<div/>', {
-            id: name,
-            class: "rate-bars",
-            css: {
-                width: blockWidth,
-            }
-        }).appendTo('#rate-bars-container');
-
-
         // Format time information, then display it ABOVE the bar
-        var hour = EqRates[i][0] % 12;              // 12-hour time
-        var minute = formatTime(EqRates[i][1]);     // Add '0' before minute if minute < 10
-        var AMPM = getAMPM(EqRates[i][0]);          // Is it AM or PM?
-
-        jQuery('<div/>', {
-            id: "timeText" + i,
-            class: 'timeText',
-            text: hour + ":" + minute + " " + AMPM
-        }).appendTo("#" + name);
-
+        var hour = EqMeals[i][0] % 12;              // 12-hour time
+        var minute = formatTime(EqMeals[i][1]);     // Add '0' before minute if minute < 10
+        var AMPM = getAMPM(EqMeals[i][0]);          // Is it AM or PM?
 
         // Pull price information, then display it ON the bar
-        var price = EqRates[i][2];
+        var price = EqMeals[i][2];
 
-        jQuery('<div/>', {
-            class: 'priceText',
-            text: "$" + price
-        }).appendTo("#" + name);
+        // Generate the blocks and surrounding text (requires nested divs)
+        $('#rate-bars-container').append(
+            $('<div/>', {
+                id: "block" + i,
+                class: "rate-bars",
+                css: {
+                    width: blockWidth,
+                }
+            }).append(
+                $('<div/>', {
+                    class: 'timeText',
+                    text: hour + ":" + minute + " " + AMPM
+                })
+            ).append(
+                $('<div/>', {
+                    class: 'priceText',
+                    text: "$" + price
+                })
+            )
+        );
     }
 
     // Do something special to pull closing time and put it ABOVE the bar and flush right
-    var hour = EqRates[rows-1][0] % 12;             // 12-hour time
-    var minute = formatTime(EqRates[rows-1][1]);    // Add '0' before minute if minute < 10
-    var AMPM = getAMPM(EqRates[rows - 1][0]);       // Is it AM or PM?
-
-    jQuery('<div/>', {
-        class: 'timeText-right',
+    var hour = EqMeals[rows-1][0] % 12;             // 12-hour time
+    var minute = formatTime(EqMeals[rows-1][1]);    // Add '0' before minute if minute < 10
+    var AMPM = getAMPM(EqMeals[rows - 1][0]);       // Is it AM or PM?
+    
+    $('<div/>', {
+        class: 'timeText-closing',
         text: hour + ":" + minute + " " + AMPM
-    }).appendTo("#" + name); // Just to keep thing simple, we'll make it a subclass of the last horizontal bar
+    }).appendTo("#block" + (rows - 2)); // Just to keep thing simple, we'll make it a subclass of the last horizontal bar
 }
 
 /*
@@ -305,7 +302,7 @@ function createEqRateBars(EqRates) {
  */
 function setArrowPosition(EqRates) {
 
-    // EqRates is a "3-dimensional" array of time slots and corresponding equivalency rates
+    // EqRates is a 2D array of time slots and corresponding equivalency rates
     var rows = EqRates.length;
 
     // Get some time information
@@ -486,7 +483,7 @@ function returnOpenOrClosed(operatingHours, hallCode) {
                 } else if (i > day) {
                     var blockName = operatingHours[hallCode][j][0];
                     var openStr = openTime(operatingHours[hallCode][j][dayCode]);
-                    var openDay = returnDay(i % 7);
+                    var openDay = dayToStr(i % 7);
 
                     return [1, "CLOSED", "- opens for " + blockName + " on " + openDay + " at " + openStr];
                 }

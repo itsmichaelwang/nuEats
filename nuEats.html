@@ -4,17 +4,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>nuEats</title>
 
         <!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
 
-        <!-- User-fed CSS -->
-        <link rel="stylesheet" href="nuEats.css" type="text/css">
-
         <!-- Bootstrap responsive CSS -->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css" type="text/css"/>
+
+        <!-- User-fed CSS -->
+        <link rel="stylesheet" href="nuEats.css" type="text/css">
 
         <!-- Google Analytics -->
         <script>
@@ -31,32 +30,28 @@
 
     <body onload="onCreate()">
 
-        <!-- Navigation Bar and Balance Button -->
+        <!-- Navigation Bar and "Check Balance" Button -->
         <div class="navbar navbar-inverse navbar-static-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="navbar-brand" href="#">nuEats</a>
 
-                    <!--
-                    <div id="bookmark" class="btn-group header-btn">
-                        <button type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                        </button>
-                    </div>
-                    -->
+                    <!-- Title of Website Goes Here -->
+                    <a class="navbar-brand" href="http://www.tinyurl.com/nuEatsFood/">nuEats</a>
 
-                    <div id="balance" class="btn-group header-btn">
+                    <!-- "Check Balance" Button Details Go Here -->
+                    <div id="balance-btn" class="btn-group header-btn">
                         <a href="https://go.dosa.northwestern.edu/uhfs/foodservice/balancecheck">
                             <button type="button" class="btn btn-default">
-                                Check Balance
+                                Check Meal Balance
                             </button>
                         </a>
                     </div>
+
                 </div>
             </div>
         </div>
 
-        <!-- Clock -->
+        <!-- LiveClock -->
         <div class="container">
             <div id="clock"></div>
         </div>
