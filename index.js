@@ -132,44 +132,10 @@ function onCreate() {
     $(document).on('click', '#norris', function() {
         createPanels(norriscenterHours);
     });
-
     $('#dining-halls').click();
 
     // Just for fun...
-    var today = new Date();
-    var hour = today.getHours();
-    var minute = formatTime(today.getMinutes());
-    var AMPM = getAMPM(hour);
-    hour = hour % 12;
-    if (hour == 0) {
-        hour = 12;
-    }
-    
-    var messages = ["This web page is 100% gluten free.",
-                    "The average person needs about 2000 calories per day.",
-                    "Shouldn't you be studying instead of reading these?",
-                    "If you can't do the time, don't do the crime.",
-                    "Sodexo is a French company.",
-                    "Don't forget to spend your equivalency meals on Saturdays!",
-                    "This PSA has been brought to you from me for free, you see?",
-                    "For a lighter but equally fulfilling experience, please visit the no-calorie alternative to nuEats, nuEats Zero.",
-                    "Shouldn't I be studying instead of making more of these?",
-                    "✓ Seen " + hour + ":" + minute + " " + AMPM,
-                    "This website is like a fine wine. It will get better as you visit it.",
-                    "4 of Illinois's last 7 governors have been convicted of crimes. Welcome!"];
-    var random = Math.floor((Math.random()*messages.length) + 1) - 1;
-    $('#footer-left').text("-Fun Fact: " + messages[random]);
-
-    // Implement a favorites button
-    var url = "https://googledrive.com/host/0By7Z_HHj2VhnWmlhbWl4aF8xdFU/nuEats.html";
-    var pageName = "nuEats";
-    $(document).on('click', '#bookmark', function() {
-        if (window.external) {
-            window.external.AddFavorite(url, pageName)  
-        } else {
-            alert("Sorry! Your browser doesn't support this. Bookmark it through your browser instead.");
-        }
-    });
+    $('#footer-left').text("This web page is 100% gluten free.");
 }
 
 /*
