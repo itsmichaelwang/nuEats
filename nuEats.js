@@ -1,5 +1,4 @@
 function onCreate() {
-
     // Create a clock and update it every 500ms
     document.getElementById("clock").innerHTML = createClock();
     setInterval(function() { document.getElementById("clock").innerHTML = createClock(); }, 500);
@@ -11,7 +10,7 @@ function onCreate() {
                     [16, 45, "9"],
                     [19, 30, "7"],
                     [26, 00, "N/A" ]];  // 2:00 AM, the NEXT day!
-    var sundayEqRates = 
+    var sundayEqRates =
                   [ [7,  30, "9"],
                     [26, 00, "N/A" ]];  // Meals are $9 all day Sunday
 
@@ -31,28 +30,28 @@ function onCreate() {
     // Procedurally indicate whether a dining hall is open or closed and provide relevant info [7][]
     //                      Hall/Meal     Mon-Thur       Fri            Sat            Sun
     var diningHallHours  =  [
-                            ["1835 Hinman", "https://m-nucuisine.sodexomyway.com/images/Hinman4_tcm238-12915.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
+                            ["1835 Hinman", "https://m-nucuisine.sodexomyway.com/images/Hinman1_tcm238-12915.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "N/A"        , "N/A"        ],
                             ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-19:00", "N/A"        , "N/A"        ]],
 
-                            ["Allison"  , "https://m-nucuisine.sodexomyway.com/images/Allison4_tcm238-9944.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
+                            ["Allison"  , "https://m-nucuisine.sodexomyway.com/images/Allison1_tcm238-9944.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-9:45"  , "7:30-9:45"  , "N/A"        , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "11:15-13:15", "11:15-13:45", "10:45-13:30", "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
 
-                            ["Elder"    , "https://m-nucuisine.sodexomyway.com/images/Elder4_tcm238-12911.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
+                            ["Elder"    , "https://m-nucuisine.sodexomyway.com/images/Elder1_tcm238-12911.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]],
 
-                            ["Plex East", "https://m-nucuisine.sodexomyway.com/images/Foster_East4_tcm238-12913.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
+                            ["Plex East", "https://m-nucuisine.sodexomyway.com/images/Foster_East1_tcm238-12913.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-20:00", "16:45-19:00", "16:45-19:00"]],
 
-                            ["Plex West", "https://m-nucuisine.sodexomyway.com/images/Foster_West4_tcm238-12914.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
+                            ["Plex West", "https://m-nucuisine.sodexomyway.com/images/Foster_West1_tcm238-12914.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "10:45-13:30", "N/A"        ],
@@ -60,14 +59,14 @@ function onCreate() {
                             ["Dinner"   , "17:15-19:30", "17:15-19:00", "17:15-19:00", "16:45-19:30"],
                             ["Late Night","20:00-23:30", "N/A"        , "N/A"        , "N/A"        ]],
 
-                            ["Sargent"  , "https://m-nucuisine.sodexomyway.com/images/Sargent4_tcm238-12910.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
+                            ["Sargent"  , "https://m-nucuisine.sodexomyway.com/images/Sargent1_tcm238-12910.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Breakfast", "7:30-10:45" , "7:30-10:45" , "7:30-9:45"  , "N/A"        ],
                             ["Brunch"   , "N/A"        , "N/A"        , "N/A"        , "11:00-14:00"],
                             ["Lunch"    , "10:45-13:15", "10:45-13:15", "10:45-13:30", "N/A"        ],
                             ["Afternoon", "13:15-16:45", "13:15-16:45", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-20:00", "16:45-19:00", "16:45-19:00", "16:45-19:30"]],
 
-                            ["Willard"  , "https://m-nucuisine.sodexomyway.com/images/Willard4_tcm238-12912.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
+                            ["Willard"  , "https://m-nucuisine.sodexomyway.com/images/Willard1_tcm238-12912.htm", "https://m-nucuisine.sodexomyway.com/images/Dining%20Halls%20Hours%20of%20Operation%20-%20Website_tcm238-13180.png",
                             ["Lunch"    , "11:15-13:15", "11:15-13:15", "N/A"        , "N/A"        ],
                             ["Dinner"   , "16:45-19:00", "16:45-19:00", "N/A"        , "N/A"        ]] ];
 
@@ -209,7 +208,7 @@ function createEqMealBars(EqMeals) {
 
     // Calculate the total number of minutes Sodexo facilities are open
     var startMin = timeInMin(EqMeals[0][0], EqMeals[0][1]);
-    var endMin = timeInMin(EqMeals[rows - 1][0], EqMeals[rows - 1][1]);   
+    var endMin = timeInMin(EqMeals[rows - 1][0], EqMeals[rows - 1][1]);
     var totalMin = endMin - startMin;
 
     // For each block, find its time as a proportion of the total time, and create a bar of proportional width
@@ -341,7 +340,7 @@ function createPanels(operatingHours) {
     // Iteratively add a link to each dining hall's menu in the title bar
     $('.panel-title').each(function(index) {
 
-        jQuery('<div/>', {                       
+        jQuery('<div/>', {
             id: index,
             class: 'panel-title menu'
         }).appendTo($(this));
@@ -394,7 +393,7 @@ function createPanels(operatingHours) {
     });
 }
 
-/* 
+/*
  * Interate through each dining facility in the array 'operatingHours', (facilities are ID'd by their location or 'hallCode' in 'operatingHours')
  * Return a string saying whether the dining facility is open or not
  */
@@ -478,7 +477,7 @@ function timeToMin(str) {
         var output = ["N/A", "N/A"];
     } else {
         var res = str.split(/-|:/);
-        var output = [timeInMin(parseInt(res[0]), parseInt(res[1])), 
+        var output = [timeInMin(parseInt(res[0]), parseInt(res[1])),
                       timeInMin(parseInt(res[2]), parseInt(res[3]))]
     }
     return output;
